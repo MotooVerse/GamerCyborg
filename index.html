@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rishabh's project shop and portfolio with fun, cartoony designs! Buy or download free creative works.">
+    <title>Rishabh's Projects Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff6f61, #ffb347, #40c4ff, #ab47bc);
+            background-size: 600%;
+            animation: colorShift 20s ease infinite;
+            position: relative;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            color: #333;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path fill="%23FFF" d="M20,30 C30,20 40,20 50,30 C60,40 70,40 80,30 C90,20 90,20 100,30 L100,100 L0,100 Z" /><path fill="%23FFF" d="M0,50 C10,40 20,40 30,50 C40,60 50,60 60,50 C70,40 80,40 90,50 L100,100 L0,100 Z" /></svg>') repeat;
+            z-index: -1;
+        }
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .cartoon-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 5px solid #000;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        .cartoon-card:hover {
+            transform: scale(1.05);
+        }
+        .cartoon-button {
+            background: #ffd700;
+            border: 4px solid #000;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s;
+        }
+        .cartoon-button:hover:not(:disabled) {
+            background: #ff3d00;
+            color: #fff;
+        }
+        .cartoon-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .section-title {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        a {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center text-gray-800">
+    <!-- Navigation -->
+    <nav class="w-full py-4 bg-white bg-opacity-80 fixed top-0 z-30 shadow-md">
+        <ul class="flex justify-center space-x-6 text-lg font-bold">
+            <li><a href="#home" class="text-[#ff3d00] hover:underline">Home</a></li>
+            <li><a href="#shop" class="text-[#ff3d00] hover:underline">Shop</a></li>
+            <li><a href="#portfolio" class="text-[#ff3d00] hover:underline">Portfolio</a></li>
+            <li><a href="#about" class="text-[#ff3d00] hover:underline">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Cart Section -->
+    <div id="cart" class="fixed top-16 right-4 bg-white p-6 rounded-lg shadow-lg cartoon-card z-20">
+        <h2 class="text-2xl font-bold">Cart</h2>
+        <ul id="cart-items" class="mt-3"></ul>
+        <p id="cart-total" class="mt-3 font-bold">Total: $0.00</p>
+        <button id="checkout-btn" class="mt-4 cartoon-button w-full">Checkout</button>
+    </div>
+
+    <!-- Home/Hero Section -->
+    <section id="home" class="w-full h-screen flex flex-col items-center justify-center text-center px-6">
+        <h1 class="text-5xl md:text-7xl font-bold text-white section-title mb-4">Welcome to Rishabh's Projects!</h1>
+        <p class="text-xl text-white mb-6">Explore my fun, cartoony creations—buy premium ones or grab freebies!</p>
+        <a href="#shop" class="cartoon-button text-lg">Start Shopping</a>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="w-full max-w-6xl mx-auto p-6 bg-white bg-opacity-80 mt-[-100px]">
+        <h2 class="text-3xl font-bold text-center text-[#ff3d00] section-title mb-6">Shop My Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project Card 1 -->
+            <div class="cartoon-card p-6 text-center">
+                <img src="https://cdn.pixabay.com/photo/2016/03/28/12/35/cat-1285634_1280.png" alt="Cool Project 1" class="w-full h-48 object-contain rounded-lg mb-4">
+                <h3 class="text-2xl font-bold">Cool Project 1</h3>
+                <p class="text-sm mt-2">A fun and creative cartoon cat adventure!</p>
+                <p class="mt-3 font-bold">$19.99</p>
+                <button class="cartoon-button mt-4 add-to-cart" data-name="Cool Project 1" data-price="19.99" data-is-free="false">Add to Cart</button>
+                <p id="status-cool-project-1" class="text-sm text-green-600 hidden mt-2"></p>
+            </div>
+            <!-- Project Card 2 -->
+            <div class="cartoon-card p-6 text-center">
+                <img src="https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404_1280.jpg" alt="Awesome Project 2" class="w-full h-48 object-contain rounded-lg mb-4">
+                <h3 class="text-2xl font-bold">Awesome Project 2</h3>
+                <p class="text-sm mt-2">Vibrant kitty designs with bold colors.</p>
+                <p class="mt-3 font-bold">$24.99</p>
+                <button class="cartoon-button mt-4 add-to-cart" data-name="Awesome Project 2" data-price="24.99" data-is-free="false">Add to Cart</button>
+                <p id="status-awesome-project-2" class="text-sm text-green-600 hidden mt-2"></p>
+            </div>
+            <!-- Project Card 3 -->
+            <div class="cartoon-card p-6 text-center">
+                <img src="https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_1280.jpg" alt="Epic Project 3" class="w-full h-48 object-contain rounded-lg mb-4">
+                <h3 class="text-2xl font-bold">Epic Project 3</h3>
+                <p class="text-sm mt-2">Epic cartoon scenes for bold fans!</p>
+                <p class="mt-3 font-bold">$29.99</p>
+                <button class="cartoon-button mt-4 add-to-cart" data-name="Epic Project 3" data-price="29.99" data-is-free="false">Add to Cart</button>
+                <p id="status-epic-project-3" class="text-sm text-green-600 hidden mt-2"></p>
+            </div>
+            <!-- Free Project 4 -->
+            <div class="cartoon-card p-6 text-center">
+                <img src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg" alt="Free Project 4" class="w-full h-48 object-contain rounded-lg mb-4">
+                <h3 class="text-2xl font-bold">Free Project 4</h3>
+                <p class="text-sm mt-2">Cute free cartoon for everyone!</p>
+                <p class="mt-3 font-bold">$0.00</p>
+                <button class="cartoon-button mt-4 add-to-cart" data-name="Free Project 4" data-price="0" data-is-free="true">Add to Cart</button>
+                <p id="status-free-project-4" class="text-sm text-green-600 hidden mt-2"></p>
+            </div>
+            <!-- Free Project 5 -->
+            <div class="cartoon-card p-6 text-center">
+                <img src="https://cdn.pixabay.com/photo/2018/07/31/11/57/cartoon-3575719_1280.jpg" alt="Free Project 5" class="w-full h-48 object-contain rounded-lg mb-4">
+                <h3 class="text-2xl font-bold">Free Project 5</h3>
+                <p class="text-sm mt-2">Playful free design to download.</p>
+                <p class="mt-3 font-bold">$0.00</p>
+                <button class="cartoon-button mt-4 add-to-cart" data-name="Free Project 5" data-price="0" data-is-free="true">Add to Cart</button>
+                <p id="status-free-project-5" class="text-sm text-green-600 hidden mt-2"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="w-full max-w-6xl mx-auto p-6 bg-transparent">
+        <h2 class="text-3xl font-bold text-center text-white section-title mb-6">Portfolio</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Portfolio Item 1 -->
+            <div class="cartoon-card p-6 bg-white bg-opacity-95">
+                <h3 class="text-2xl font-bold">Project Alpha</h3>
+                <img src="https://cdn.pixabay.com/photo/2015/11/16/22/39/cat-1046544_1280.jpg" alt="Project Alpha" class="w-full h-56 object-contain rounded-lg my-4">
+                <p class="text-sm">This project showcases dynamic cartoon designs with interactive elements.</p>
+                <p class="mt-2 font-bold">Completed: September 2025</p>
+            </div>
+            <!-- Portfolio Item 2 -->
+            <div class="cartoon-card p-6 bg-white bg-opacity-95">
+                <h3 class="text-2xl font-bold">Project Beta</h3>
+                <img src="https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_1280.jpg" alt="Project Beta" class="w-full h-56 object-contain rounded-lg my-4">
+                <p class="text-sm">A bold creation blending creativity and fun aesthetics.</p>
+                <p class="mt-2 font-bold">Completed: August 2025</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="w-full max-w-6xl mx-auto p-6 bg-white bg-opacity-80">
+        <h2 class="text-3xl font-bold text-center text-[#ff3d00] section-title mb-6">About Me</h2>
+        <div class="cartoon-card p-6 text-center">
+            <p class="text-lg">Hi, I'm Rishabh! I'm a passionate creator who loves building fun and colorful projects. My work blends creativity with a cartoony flair, perfect for fans of vibrant designs. Contact me at <a href="mailto:rishabhjainwal770@gmail.com" class="text-[#ff3d00] underline">rishabhjainwal770@gmail.com</a> to collaborate or learn more!</p>
+        </div>
+    </section>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div class="bg-white p-8 rounded-lg cartoon-card max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-6">Secure Checkout</h2>
+            <p class="mb-4 text-sm">Your info is safe— we use mock encryption for this demo. Enter details to proceed.</p>
+            <div>
+                <label class="block mb-2 font-bold">Name</label>
+                <input id="name-input" type="text" class="w-full p-3 border rounded mb-4" placeholder="Your Name">
+                <label class="block mb-2 font-bold">Email</label>
+                <input id="email-input" type="email" class="w-full p-3 border rounded mb-4" placeholder="Your Email">
+                <div id="robux-section">
+                    <label class="block mb-2 font-bold">Robux Gift Card</label>
+                    <select id="robux-select" class="w-full p-3 border rounded mb-4">
+                        <option value="10|800">800 Robux ($10.00)</option>
+                        <option value="25|2000">2000 Robux ($25.00)</option>
+                        <option value="50|4500">4500 Robux ($50.00)</option>
+                    </select>
+                </div>
+                <button id="submit-checkout" class="cartoon-button w-full">Submit Order</button>
+                <button id="close-modal" class="mt-3 text-sm underline">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full py-6 text-center bg-white bg-opacity-80 mt-6">
+        <p class="text-gray-700">© 2025 Rishabh. All rights reserved. | <a href="mailto:rishabhjainwal770@gmail.com" class="text-[#ff3d00]">Contact</a></p>
+    </footer>
+
+    <!-- JavaScript for Cart and Checkout -->
+    <script>
+        let cart = [];
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const addedFreeItems = new Set(); // Track added free items to prevent stacking
+
+        // Add to Cart
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const name = button.dataset.name;
+                const price = parseFloat(button.dataset.price);
+                const isFree = button.dataset.isFree === 'true';
+                const statusId = `status-${name.toLowerCase().replace(/\s+/g, '-')}`;
+
+                if (isFree && addedFreeItems.has(name)) {
+                    alert('This free project is already in your cart! One per customer.');
+                    return;
+                }
+
+                cart.push({ name, price });
+                updateCart();
+
+                // Disable button and show status for free items
+                if (isFree) {
+                    addedFreeItems.add(name);
+                    button.disabled = true;
+                    button.textContent = 'Added!';
+                    document.getElementById(statusId).textContent = 'Already added to cart!';
+                    document.getElementById(statusId).classList.remove('hidden');
+                } else {
+                    // For paid, show temporary status
+                    const status = document.getElementById(statusId);
+                    status.textContent = 'Added to cart!';
+                    status.classList.remove('hidden');
+                    setTimeout(() => status.classList.add('hidden'), 2000);
+                }
+            });
+        });
+
+        // Update Cart Display
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(li);
+                total += item.price;
+            });
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+            return total;
+        }
+
+        // Show/Hide Checkout Modal
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            const total = updateCart();
+            const robuxSection = document.getElementById('robux-section');
+            if (total === 0) {
+                robuxSection.style.display = 'none';
+            } else {
+                robuxSection.style.display = 'block';
+            }
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        });
+
+        // Submit Order with Validation and Email
+        document.getElementById('submit-checkout').addEventListener('click', () => {
+            const name = document.getElementById('name-input').value.trim();
+            const email = document.getElementById('email-input').value.trim();
+            const total = updateCart();
+
+            if (!name) {
+                alert('Please enter your name.');
+                return;
+            }
+            if (!email || !emailRegex.test(email)) {
+                alert('Please enter a valid email.');
+                return;
+            }
+
+            const items = cart.map(item => item.name).join(', ');
+            const emailBody = `
+                New Order from ${name} (${email}):
+                Purchased: ${items}
+                Total: $${total.toFixed(2)}
+                Please send the items within 1 day.
+            `;
+
+            if (total === 0) {
+                alert('Free order submitted! Check your email for downloads. (Mock)');
+                fetch('/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: 'rishabhjainwal770@gmail.com',
+                        subject: `New Free Order from ${name}`,
+                        body: emailBody
+                    })
+                }).then(res => res.json()).then(data => console.log(data));
+            } else {
+                const selected = document.getElementById('robux-select').value.split('|');
+                const payAmount = parseFloat(selected[0]);
+                const robux = selected[1];
+                if (payAmount < total) {
+                    alert(`Please select a gift card that covers the total ($${total.toFixed(2)}).`);
+                    return;
+                }
+                alert(`Order submitted! You'll pay with ${robux} Robux ($${payAmount}). Check your email. (Mock)`);
+                fetch('/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        to: 'rishabhjainwal770@gmail.com',
+                        subject: `New Order from ${name}`,
+                        body: emailBody
+                    })
+                }).then(res => res.json()).then(data => console.log(data));
+            }
+            cart = [];
+            addedFreeItems.clear(); // Reset for next session
+            updateCart();
+            document.getElementById('checkout-modal').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
